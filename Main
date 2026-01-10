@@ -1,0 +1,72 @@
+package aaa;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        RailwayNetwork rn = new RailwayNetwork();
+        Scanner s = new Scanner(System.in);
+
+        int option;
+        do {
+            showMenu();
+            option = s.nextInt();
+            s.nextLine();
+
+            switch (option) {
+                case 1:
+                	System.out.println("City name:");
+                    String name = s.nextLine();
+
+                    System.out.println("Country:");
+                    String country = s.nextLine();
+
+                    rn.addCity(name, country);
+                    break;
+
+                case 2:
+                    System.out.println("First city:");
+                    String c1 = s.nextLine();
+                    System.out.println("Second city:");
+                    String c2 = s.nextLine();
+                    System.out.println("Distance:");
+                    int d = s.nextInt();
+                    s.nextLine();
+                    rn.addConnection(c1, c2, d);
+                    break;
+
+                case 3:
+                	System.out.println("Enter city name:");
+                    String cityName = s.nextLine();
+                    rn.modifyCity(cityName);
+                    break;
+
+                case 4:
+                	  System.out.println("Insert city name to delete:");
+                	    String cityNames = s.nextLine();
+                	    rn.deleteCity(cityNames);
+                    break;
+
+                case 5:
+                    rn.cheapestForeignConnection();
+                    break;
+
+                case 6:
+                    rn.showCities();
+                    break;
+            }
+        } while (option != 0);
+    }
+
+    public static void showMenu() {
+        System.out.println("1) Add city");
+        System.out.println("2) Add connection");
+        System.out.println("3) Modify city");
+        System.out.println("4) Delete city");
+        System.out.println("5) Cheapest foreign connection");
+        System.out.println("6) Show cities");
+        System.out.println("0) Exit");
+    }
+}
