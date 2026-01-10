@@ -1,0 +1,65 @@
+package aaa;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class City {
+
+    private String name;
+    private String country;
+    private List<Connection> connections;
+
+    public City(String name, String country) {
+        this.name = name;
+        this.country = country;
+        this.connections = new LinkedList<>();
+    }
+
+    public boolean addConnection(String cityName, int distance) {
+        for (Connection c : connections) {
+            if (c.getCityName().equalsIgnoreCase(cityName)) {
+                return false;
+            }
+        }
+        connections.add(new Connection(cityName, distance));
+        return true;
+    }
+
+    public boolean removeConnection(String cityName) {
+        for (int i = 0; i < connections.size(); i++) {
+            if (connections.get(i).getCityName().trim()
+                    .equalsIgnoreCase(cityName.trim())) {
+                connections.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
+    }
+
+    @Override
+    public String toString() {
+        return "City [name=" + name + ", country=" + country + ", connections=" + connections + "]";
+    }
+}
+
