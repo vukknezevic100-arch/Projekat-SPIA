@@ -1,0 +1,120 @@
+package aaa;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class RailwayNetwork {
+
+    private LinkedList<City> cities = new LinkedList<>();
+    private Scanner s = new Scanner(System.in);
+
+    private City findCity(String name) {
+        for (City c : cities) {
+            if (c.getName().equalsIgnoreCase(name.trim())) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+   //Dodavanje grada
+    public boolean addCity(String name, String country) {
+        if (findCity(name) != null) return false;
+        cities.add(new City(name, country));
+        return true;
+    }
+
+    public void addConnection(String city1, String city2, int distance) {
+        City c1 = findCity(city1);
+        City c2 = findCity(city2);
+
+        if (c1 == null || c2 == null) return;
+
+        c1.addConnection(city2, distance);
+        c2.addConnection(city1, distance);
+    }
+
+//Modifikovanje Grada t.j Ime i Drzavu
+    public void modifyCity(String name) {
+        City c = findCity(name);
+
+        if (c == null) {
+            System.out.println("City not found");
+            return;
+        }
+
+        System.out.println("Choose option:");
+        System.out.println("n - change name");
+        System.out.println("c - change country");
+
+        String option = s.nextLine();
+
+        if (option.equalsIgnoreCase("n")) {
+            System.out.println("Enter new name:");
+            c.setName(s.nextLine());
+        } 
+        else if (option.equalsIgnoreCase("c")) {
+            System.out.println("Enter new country:");
+            c.setCountry(s.nextLine());
+        } 
+        else {
+            System.out.println("Wrong option");
+        }
+    }
+
+//Brisanje grada koje ukljucuje i brisanje same konekcije sa nekim drugim gradom
+    public boolean deleteCity(String name) {
+        City c = findCity(name);
+        if (c == null) {
+        	System.out.println("City with that name dont exist");
+        	return false;
+        } else {
+        	System.out.println("Sucessfully deleted city");
+        	cities.remove(c);
+        }
+        	
+        for (City other : cities) {
+            other.removeConnection(name);
+        }
+        return true;
+    }
+
+   //Najjeftiniji prevoz sa gradom iz druge drzave
+    public void cheapestForeignConnection() {
+        for (City c : cities) {
+
+            double minPrice = Double.MAX_VALUE;
+            String bestCity = null;
+
+            for (Connection con : c.getConnections()) {
+                City neighbor = findCity(con.getCityName());
+
+                if (neighbor != null &&
+                    !neighbor.getCountry().equalsIgnoreCase(c.getCountry())) {
+
+                    double price = con.getDistance() * 0.15;
+
+                    if (price < minPrice) {
+                        minPrice = price;
+                        bestCity = neighbor.getName();
+                    }
+                }
+            }
+
+            if (bestCity != null) {
+                System.out.println(
+                    c.getName() + "to" + bestCity +
+                    " | price: " + minPrice + " €"
+                );
+            } else {
+            	System.out.println("No citys from different country");
+            }
+        }
+    }
+//Prikaz
+    public void showCities() {
+        for (City c : cities) {
+            System.out.println(c);
+        }
+    }
+}
