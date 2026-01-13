@@ -1,5 +1,7 @@
 package aaa;
 
+
+
 import java.util.Scanner;
 
 public class Main {
@@ -56,6 +58,13 @@ public class Main {
                 case 6:
                     rn.showCities();
                     break;
+                case 7:
+                	System.out.println("City name:");
+                    String sc = s.nextLine();
+                	System.out.println("Budget:");
+                    int budget = s.nextInt();
+                    rn.availableCities(sc,budget);
+                    break;
             }
         } while (option != 0);
     }
@@ -67,6 +76,7 @@ public class Main {
         System.out.println("4) Delete city");
         System.out.println("5) Cheapest foreign connection");
         System.out.println("6) Show cities");
+        System.out.println("7) Available Cities");
         System.out.println("0) Exit");
     }
 }
