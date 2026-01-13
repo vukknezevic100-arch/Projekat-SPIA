@@ -1,5 +1,4 @@
 package aaa;
-
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -116,5 +115,34 @@ public class RailwayNetwork {
         for (City c : cities) {
             System.out.println(c);
         }
+    }
+    
+    public void availableCities(String city,int budget) {
+    	for (City c : cities) {
+    		
+    		if(c.getName().equalsIgnoreCase(city)) {
+    			 
+    			 for (Connection con : c.getConnections()) {
+    	                City neighbor = findCity(con.getCityName());
+
+    	                if (neighbor != null ) {
+
+    	                	double price;
+    	                	if (neighbor.getCountry().equalsIgnoreCase(c.getCountry())) {
+    	                	    price = con.getDistance() * 0.10; // domaći
+    	                	} else {
+    	                	    price = con.getDistance() * 0.15; // međunarodni
+    	                	}
+    	                    if(price<=budget) {
+    	                    	System.out.println(con.getCityName()+ " Price: " + price);
+    	                    }
+    	                    
+    	                }
+    	            }
+    			
+    			break;
+    		}
+    		
+    	}
     }
 }
